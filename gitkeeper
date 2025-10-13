@@ -3,6 +3,7 @@
 import argparse
 import configparser
 from enum import Enum
+from string import Template
 import subprocess
 from pathlib import Path
 import os
@@ -80,7 +81,7 @@ class GitRuntimeError(RuntimeError):
 
 
 def _get_passthrough_envs() -> list[str]:
-    envs = []
+    envs: list[str] = []
     if os.environ.get("SSH_AUTH_SOCK"):
         envs.append(f"SSH_AUTH_SOCK={os.environ['SSH_AUTH_SOCK']}")
     if USER_GITCONFIG_FILE.exists():
@@ -275,7 +276,8 @@ def status(
     current_uid: int,
     no_fetch: bool,
     threads: int,
-    motd: bool = False,
+    # (dirty_template_path, clean_template_path)
+    motd_paths: Optional[tuple[Path, Path]] = None,
 ) -> None:
     if not repo_names:
         repo_names = list(config.keys())
@@ -320,8 +322,9 @@ def status(
     with ThreadPoolExecutor(max_workers=threads) as executor:
         table = list(executor.map(get_single_status, repo_names))
 
-    if not motd:
-        print(make_table(table, headers=["Repo", "Name", "Status", "Remote"]))
+    headers = ["Repo", "Name", "Status", "Remote"]
+    if not motd_paths:
+        print(make_table(table, headers=headers))
     else:
         with open("/run/gitkeeper-motd", "w", encoding="utf-8") as f:
             # Filter clean and up-to-date repos
@@ -330,13 +333,13 @@ def status(
                 if "✅" in status_str and ("✅" in remote_str or "N/A" == remote_str):
                     del table[i]
             if len(table) > 0:
-                f.write("⚠️ Some repos need your attention! ⚠️\n")
-                f.write(
-                    make_table(table, headers=["Repo", "Name", "Status", "Remote"])
-                    + "\n"
-                )
-                f.write("⬆️ Please commit & update your repos. ⬆️\n")
-                f.write("If in doubt, always ask!\n")
+                with open(motd_paths[0], "r", encoding="utf-8") as tmplf:
+                    tmpl = Template(tmplf.read())
+                f.write(tmpl.substitute(table=make_table(table, headers=headers)))
+            else:
+                with open(motd_paths[1], "r", encoding="utf-8") as tmplf:
+                    tmpl = Template(tmplf.read())
+                f.write(tmpl.substitute())
 
 
 def commit(
@@ -465,6 +468,9 @@ def main(args: argparse.Namespace) -> None:
     current_uid = os.getuid()
     if args.command != "motd":
         user_email, user_name = handle_user_config()
+    else:
+        # Make type checker happy
+        user_email, user_name = "", ""
 
     if not args.config.exists():
         print(f"Global config file {args.config} not found")
@@ -473,7 +479,7 @@ def main(args: argparse.Namespace) -> None:
     parser = configparser.ConfigParser()
     parser.read(args.config)
     cwd_toplevel = find_git_toplevel()
-    _config = {k: dict(parser.items(k)) for k in parser.sections()}
+    _config = {k: dict(parser.items(k)) for k in parser.sections() if k != ".config"}
     # check if config is valid
     config: UserConfigType = {}
     for repo_name in _config:
@@ -511,6 +517,21 @@ def main(args: argparse.Namespace) -> None:
             threads,
         )
     elif args.command == "motd":
+        tmpl_dirty_path = Path(
+            parser[".config"].get(
+                "motd-template-dirty", "/etc/git-keeper.d/motd-dirty.tmpl"
+            )
+        )
+        tmpl_clean_path = Path(
+            parser[".config"].get(
+                "motd-template-clean", "/etc/git-keeper.d/motd-clean.tmpl"
+            )
+        )
+        if not tmpl_dirty_path.exists() or not tmpl_clean_path.exists():
+            print(
+                f"MOTD template files ({tmpl_dirty_path} or {tmpl_clean_path}) not found, please check your config"
+            )
+            sys.exit(1)
         all_repos: list[str] = []
         repo_names_handle(all_repos, config)
         status(
@@ -519,7 +540,7 @@ def main(args: argparse.Namespace) -> None:
             current_uid,
             no_fetch=True,
             threads=threads,
-            motd=True,
+            motd_paths=(tmpl_dirty_path, tmpl_clean_path),
         )
     elif args.command == "commit":
         repo_name = args.repo

@@ -1,3 +1,8 @@
+[.config]
+# .config is a special case that used to configure git-keeper itself
+motd-template-dirty = /etc/git-keeper.d/motd-dirty.tmpl
+motd-template-clean = /etc/git-keeper.d/motd-clean.tmpl
+
 [rsyncd]
 path = /etc/rsyncd
 
