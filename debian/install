@@ -1,5 +1,5 @@
 #!/usr/bin/dh-exec
-gitkeeper => usr/bin/git-keeper
+git-keeper => usr/bin/git-keeper
 completions/gitkeeper.completion.bash => usr/share/bash-completion/completions/git-keeper.completion.bash
 motd/99-gitkeeper => etc/update-motd.d/99-git-keeper
 debian/gitkeeper.conf.example => usr/share/doc/git-keeper/examples/gitkeeper.conf.example

@@ -23,7 +23,7 @@ jobs:
         pip install ruff mypy
     - name: Type check
       run: |
-        mypy --strict gitkeeper
+        mypy --strict git-keeper
     - name: Analysing the code with ruff
       run: |
-        ruff check gitkeeper
+        ruff check git-keeper
