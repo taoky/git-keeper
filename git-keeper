@@ -24,7 +24,7 @@ __VERSION__ = "0.20250903.0"
 
 def make_table(data: Collection[Collection[Any]], headers: Sequence[str]) -> str:
     """
-    Alternative for tabulate.tabulate, to make gitkeeper free of deps.
+    Alternative for tabulate.tabulate, to make git-keeper free of deps.
     """
     s = ""
     # get longest item in every col
@@ -62,7 +62,7 @@ if os.environ.get("SUDO_USER"):
     user_home = Path(pwd.getpwuid(int(os.environ["SUDO_UID"])).pw_dir)
 else:
     user_home = Path.home()
-USER_CONFIG_FILE = user_home / ".gitkeeper.conf"
+USER_CONFIG_FILE = user_home / ".git-keeper.conf"
 USER_GITCONFIG_FILE = user_home / ".gitconfig"
 
 current_username = os.environ.get("SUDO_USER") or pwd.getpwuid(os.getuid()).pw_name
@@ -326,7 +326,7 @@ def status(
     if not motd_paths:
         print(make_table(table, headers=headers))
     else:
-        with open("/run/gitkeeper-motd", "w", encoding="utf-8") as f:
+        with open("/run/git-keeper-motd", "w", encoding="utf-8") as f:
             # Filter clean and up-to-date repos
             for i in range(len(table) - 1, -1, -1):
                 _, _, status_str, remote_str = table[i]
@@ -444,7 +444,7 @@ def handle_user_config() -> tuple[str, str]:
             return parser
         return None
 
-    # ~/.gitkeeper.conf first, and then ~/.gitconfig
+    # ~/.git-keeper.conf first, and then ~/.gitconfig
     parser = check_config(USER_CONFIG_FILE)
     if not parser:
         parser = check_config(USER_GITCONFIG_FILE)
@@ -564,7 +564,7 @@ def main(args: argparse.Namespace) -> None:
 
         repo = config[repo_name]
         # different from other commands, vcs requires changing path when user is requesting "."
-        # so that some git commands could work correctly like "gitkeeper vcs . blame ./somefile"
+        # so that some git commands could work correctly like "git-keeper vcs . blame ./somefile"
         # if you're inside somedir/ and don't change cwd here, git would not work as expected.
         if repo_name == ".":
             repo["path"] = Path.cwd()
@@ -581,13 +581,13 @@ def main(args: argparse.Namespace) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        "gitkeeper", description="Tracks specified git repos for sysadmins."
+        "git-keeper", description="Tracks specified git repos for sysadmins."
     )
     parser.add_argument(
         "--config",
         "-c",
         help="Path to config file",
-        default="/etc/gitkeeper.conf",
+        default="/etc/git-keeper.conf",
         type=Path,
     )
     parser.add_argument(
