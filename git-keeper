@@ -19,7 +19,7 @@ from typing import (
 )
 from concurrent.futures import ThreadPoolExecutor
 
-__VERSION__ = "0.20250903.0"
+__VERSION__ = "0.20250912.0"
 
 
 def make_table(data: Collection[Collection[Any]], headers: Sequence[str]) -> str:
@@ -634,6 +634,9 @@ if __name__ == "__main__":
     parser_help = subparsers.add_parser("help", help="Show help")
 
     args = parser.parse_args()
+    if sys.argv[0] == "gitkp":
+        args.command = "vcs"
+
     if args.command is None:
         args.command = "status"
         args.repos = []

@@ -1,0 +1,8 @@
+debian/.debhelper/
+debian/git-keeper/
+debian/tmp/
+debian/debhelper-build-stamp
+debian/files
+debian/git-keeper.1
+debian/git-keeper.postrm.debhelper
+debian/git-keeper.substvars
