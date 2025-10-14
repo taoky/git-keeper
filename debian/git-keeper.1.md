@@ -31,7 +31,7 @@ Please make sure:
 
     So you could use `gitkp` same as how you use `git` before.
 
-The file `/etc/gitkeeper.conf` is used to specify which git repositories to track. It is in INI format:
+The file `/etc/git-keeper.conf` is used to specify which git repositories to track. It is in INI format:
 
 ```ini
 [repo_name]
@@ -46,9 +46,9 @@ path = /path/to/repo
 user = someuser
 ```
 
-Upon first run, git-keeper would ask for your email and use your username as name, unless `~/.gitconfig` or `~/.gitkeeper.conf` is already configured.
+Upon first run, git-keeper would ask for your email and use your username as name, unless `~/.gitconfig` or `~/.git-keeper.conf` is already configured.
 
-The MOTD service and timer would only be enabled if `/etc/gitkeeper.conf` exists.
+The MOTD service and timer would only be enabled if `/etc/git-keeper.conf` exists.
 
 # EXAMPLE: CHECK SYSTEM REPOS
 

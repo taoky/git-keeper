@@ -6,7 +6,7 @@ include /usr/share/dpkg/pkg-info.mk
 	dh $@
 
 execute_before_dh_install:
-	sed -i '/__VERSION__ = /c__VERSION__ = "$(DEB_VERSION)"' gitkeeper
+	sed -i '/__VERSION__ = /c__VERSION__ = "$(DEB_VERSION)"' git-keeper
 
 execute_before_dh_installman:
 ifeq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))

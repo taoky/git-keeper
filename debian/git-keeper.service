@@ -2,7 +2,7 @@
 Description=Generate git-keeper MOTD
 Documentation=man:git-keeper(1)
 After=network.target
-ConditionPathExists=/etc/gitkeeper.conf
+ConditionPathExists=/etc/git-keeper.conf
 
 [Service]
 Type=oneshot

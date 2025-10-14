@@ -1,4 +1,4 @@
-_comp_cmd_gitkeeper()
+_comp_cmd_git_keeper()
 {
   local cur prev words cword
   _get_comp_words_by_ref cur prev words cword
@@ -12,7 +12,7 @@ _comp_cmd_gitkeeper()
     case "$word1" in
       status|commit|update|vcs|diff)
         local options
-        if options="$(gitkeeper ls </dev/null 2>/dev/null)"; then
+        if options="$(git-keeper ls </dev/null 2>/dev/null)"; then
           COMPREPLY=( $(compgen -W "${options}" -- ${cur}) )
         else
           COMPREPLY=()
@@ -31,7 +31,7 @@ _comp_cmd_gitkeeper()
         ;;
     esac
   fi
-} && complete -o bashdefault -o default -o nospace -F _comp_cmd_gitkeeper gitkeeper
+} && complete -o bashdefault -o default -o nospace -F _comp_cmd_git_keeper git-keeper
 
 _comp_cmd_gitkp()
 {

@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ -f /run/gitkeeper-motd ]; then
-    cat /run/gitkeeper-motd
+if [ -f /run/git-keeper.motd ]; then
+    cat /run/git-keeper.motd
 else
-    echo "(gitkeeper motd timer hasn't been triggered yet)"
+    echo "(git-keeper motd timer hasn't been triggered yet)"
 fi

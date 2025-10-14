@@ -7,7 +7,7 @@ Build-Depends:
  dh-exec,
  go-md2man <!nodoc>,
 Standards-Version: 4.7.2
-Homepage: https://github.com/taoky/gitkeeper
+Homepage: https://github.com/taoky/git-keeper
 Rules-Requires-Root: no
 
 Package: git-keeper
