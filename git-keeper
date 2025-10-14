@@ -19,7 +19,7 @@ from typing import (
 )
 from concurrent.futures import ThreadPoolExecutor
 
-__VERSION__ = "0.20250912.0"
+__VERSION__ = "0.20251015.0"
 
 
 def make_table(data: Collection[Collection[Any]], headers: Sequence[str]) -> str:
@@ -635,7 +635,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if sys.argv[0] == "gitkp":
+        # A special alias for git-keeper, to save typing
         args.command = "vcs"
+        args.repo = "."
 
     if args.command is None:
         args.command = "status"

@@ -124,4 +124,4 @@ For your information, you can create a deploy key for each repository with follo
 
 # HISTORY
 
-September 2025, Originally compiled by Keyu Tao (taoky@ustclug.org)
+October 2025, Originally compiled by Keyu Tao (taoky@ustclug.org)
