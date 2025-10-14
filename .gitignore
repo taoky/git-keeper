@@ -6,3 +6,4 @@ debian/files
 debian/git-keeper.1
 debian/git-keeper.postrm.debhelper
 debian/git-keeper.substvars
+debian/changelog.dch
