@@ -46,6 +46,17 @@ path = /path/to/repo
 user = someuser
 ```
 
+For motd functionality, you can add a special section `[.config]` to configure git-keeper itself:
+
+```ini
+[.config]
+# .config is a special case that used to configure git-keeper itself
+motd-template-dirty = /etc/git-keeper.d/motd-dirty.tmpl
+motd-template-clean = /etc/git-keeper.d/motd-clean.tmpl
+```
+
+`/etc/git-keeper.d/motd-dirty.tmpl` and `/etc/git-keeper.d/motd-clean.tmpl` are templates that uses Python PEP 292 format (Simpler String Substitutions). `motd-template-dirty` uses `$table` variable and `motd-template-clean` does not use any variable.
+
 Upon first run, git-keeper would ask for your email and use your username as name, unless `~/.gitconfig` or `~/.git-keeper.conf` is already configured.
 
 The MOTD service and timer would only be enabled if `/etc/git-keeper.conf` exists.
