@@ -326,7 +326,7 @@ def status(
     if not motd_paths:
         print(make_table(table, headers=headers))
     else:
-        with open("/run/git-keeper-motd", "w", encoding="utf-8") as f:
+        with open("/run/git-keeper.motd", "w", encoding="utf-8") as f:
             # Filter clean and up-to-date repos
             for i in range(len(table) - 1, -1, -1):
                 _, _, status_str, remote_str = table[i]
