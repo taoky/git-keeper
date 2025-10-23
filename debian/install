@@ -2,4 +2,6 @@
 git-keeper => usr/bin/git-keeper
 completions/git-keeper.completion.bash => usr/share/bash-completion/completions/git-keeper.completion.bash
 motd/99-git-keeper => etc/update-motd.d/99-git-keeper
+motd/motd-dirty.tmpl => etc/git-keeper.d/motd-dirty.tmpl
+motd/motd-clean.tmpl => etc/git-keeper.d/motd-clean.tmpl
 debian/git-keeper.conf.example => usr/share/doc/git-keeper/examples/git-keeper.conf.example
