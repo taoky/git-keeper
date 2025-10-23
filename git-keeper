@@ -480,6 +480,11 @@ def main(args: argparse.Namespace) -> None:
     parser.read(args.config)
     cwd_toplevel = find_git_toplevel()
     _config = {k: dict(parser.items(k)) for k in parser.sections() if k != ".config"}
+    # use empty config dict when config does not have .config section
+    if not parser.has_section(".config"):
+        git_keeper_config = {}
+    else:
+        git_keeper_config = dict(parser.items(".config"))
     # check if config is valid
     config: UserConfigType = {}
     for repo_name in _config:
@@ -518,12 +523,12 @@ def main(args: argparse.Namespace) -> None:
         )
     elif args.command == "motd":
         tmpl_dirty_path = Path(
-            parser[".config"].get(
+            git_keeper_config.get(
                 "motd-template-dirty", "/etc/git-keeper.d/motd-dirty.tmpl"
             )
         )
         tmpl_clean_path = Path(
-            parser[".config"].get(
+            git_keeper_config.get(
                 "motd-template-clean", "/etc/git-keeper.d/motd-clean.tmpl"
             )
         )
