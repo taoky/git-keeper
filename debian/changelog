@@ -1,5 +1,5 @@
-git-keeper (0.20251015.0) UNRELEASED; urgency=medium
+git-keeper (0.20251024.0) UNRELEASED; urgency=medium
 
   * Initial release (closes: #1113964).
 
- -- Keyu Tao <taoky@ustclug.org>  Wed, 15 Oct 2025 03:42:00 +0800
+ -- Keyu Tao <taoky@ustclug.org>  Fri, 24 Oct 2025 14:03:03 +0000
