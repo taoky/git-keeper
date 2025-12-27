@@ -1,4 +1,4 @@
-git-keeper (0.20251015.0) UNRELEASED; urgency=medium
+git-keeper (0.20251015.0) unstable; urgency=medium
 
   * Initial release (closes: #1113964).
 
