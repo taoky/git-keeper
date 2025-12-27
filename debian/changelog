@@ -1,10 +1,10 @@
-git-keeper (0.20251024.0) UNRELEASED; urgency=medium
+git-keeper (0.20251024.0) unstable; urgency=medium
 
-  * Use empty config when .config section does not exist
-  * Install motd-dirty & motd-clean template
-  * Fix typo
+  * Use default value when .config section does not exist.
+  * Add motd-dirty & motd-clean template to debian/install.
+  * Fix filename typo in motd mode.
 
- -- Keyu Tao <taoky@ustclug.org>  Sun, 28 Dec 2025 00:07:47 +0800
+ -- Keyu Tao <taoky@ustclug.org>  Sat, 27 Dec 2025 16:18:48 +0000
 
 git-keeper (0.20251015.0) unstable; urgency=medium
 
