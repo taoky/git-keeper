@@ -1,14 +1,12 @@
 Source: git-keeper
 Section: utils
-Priority: optional
 Maintainer: Keyu Tao <taoky@ustclug.org>
 Build-Depends:
  debhelper-compat (= 13),
  dh-exec,
  go-md2man <!nodoc>,
-Standards-Version: 4.7.2
+Standards-Version: 4.7.3
 Homepage: https://github.com/taoky/git-keeper
-Rules-Requires-Root: no
 Vcs-Browser: https://salsa.debian.org/taoky/git-keeper
 Vcs-Git: https://salsa.debian.org/taoky/git-keeper.git
 
