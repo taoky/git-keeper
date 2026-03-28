@@ -19,7 +19,7 @@ from typing import (
 )
 from concurrent.futures import ThreadPoolExecutor
 
-__VERSION__ = "0.20251015.0"
+__VERSION__ = "0.20251024.0-1"
 
 
 def make_table(data: Collection[Collection[Any]], headers: Sequence[str]) -> str:
