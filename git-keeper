@@ -96,6 +96,7 @@ def _run_git_command(
     raw: bool = False,
     timeout: Optional[float] = None,
 ) -> Optional[str]:
+    git_command = ["git", "-C", str(repo)] + command
     if sudo_user:
         envs = _get_passthrough_envs()
         command = [
@@ -104,17 +105,16 @@ def _run_git_command(
             sudo_user,
             "env",
             *envs,
-            "git",
-        ] + command
+        ] + git_command
     else:
-        command = ["git"] + command
+        command = git_command
     try:
         if not raw:
             p = subprocess.run(
-                command, cwd=repo, stdout=subprocess.PIPE, timeout=timeout, check=False
+                command, stdout=subprocess.PIPE, timeout=timeout, check=False
             )
         else:
-            p = subprocess.run(command, cwd=repo, timeout=timeout, check=False)
+            p = subprocess.run(command, timeout=timeout, check=False)
     except subprocess.TimeoutExpired as exc:
         raise GitRuntimeError(
             f"Timeout running {command} on {repo}", -signal.SIGKILL
